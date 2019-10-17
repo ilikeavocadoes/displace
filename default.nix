@@ -2,5 +2,5 @@
 
 with nixpkgs;
 
-let displace = callPackage ./derivation.nix {};
+let displace = haskellPackages.callCabal2nix "displace" ./. {};
 in displace
