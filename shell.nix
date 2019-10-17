@@ -8,8 +8,9 @@ haskellPackages.shellFor {
   ];
   buildInputs = with haskellPackages; [
     yaml
-    attoparsec
     text
     containers
+    regex-tdfa
+    regex-tdfa-text
   ];
 }

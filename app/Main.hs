@@ -9,4 +9,4 @@ main :: IO ()
 main = do
   filename <- head <$> getArgs
   variableValues <- decodeFileThrow filename
-  IO.interact $ replaceTextVars variableValues
+  IO.interact $ replaceVariables variableValues
