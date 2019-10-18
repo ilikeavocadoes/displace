@@ -13,5 +13,6 @@ haskellPackages.shellFor {
     unordered-containers
     regex-tdfa
     regex-tdfa-text
+    pandoc-types
   ];
 }
