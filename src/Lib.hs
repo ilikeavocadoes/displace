@@ -5,9 +5,12 @@ module Lib
   ) where
 
 import           Control.Exception
+import qualified Data.HashMap.Strict  as HMap
 import qualified Data.Map.Strict      as Map
 import           Data.Maybe           (fromMaybe, listToMaybe)
 import qualified Data.Text            as T
+import           Data.Yaml            (Object, ParseException, Value (Object),
+                                       decodeFileThrow)
 import           Text.Regex.TDFA      ((=~))
 import           Text.Regex.TDFA.Text ()
 
@@ -19,6 +22,50 @@ instance Show VariableNotDefinedException where
     "Variable not defined: " ++ T.unpack var
 
 instance Exception VariableNotDefinedException
+
+data VariablePath = VariablePath
+  { filename   :: T.Text
+  , pathInFile :: Maybe T.Text
+  }
+
+data FileContent =
+  FileContent T.Text
+              (Either ParseException Value)
+
+data LookupError =
+  FileNotRead
+
+variableLookup ::
+     Map.Map T.Text FileContent -> VariablePath -> Either LookupError T.Text
+variableLookup variableMap VariablePath { filename = filename
+                                        , pathInFile = pathInFile
+                                        } =
+  case Map.lookup filename variableMap of
+    Nothing -> Left FileNotRead
+    Just (FileContent textualContent eitherYamlContent) ->
+      case pathInFile of
+        Nothing -> Right textualContent
+        Just varPath ->
+          case eitherYamlContent of
+            Right yamlValue -> Right $ getQualifiedYamlValue varPath yamlValue
+            Left yamlParseException -> throw yamlParseException
+
+getQualifiedYamlValue :: T.Text -> Value -> T.Text
+getQualifiedYamlValue variablePath yamlValue =
+  let pathParts = parseVariablePath variablePath
+   in getQualifiedYamlValue' pathParts yamlValue
+
+getQualifiedYamlValue' [] value = T.pack $ show value
+getQualifiedYamlValue' (p:ps) value =
+  case value of
+    Object obj ->
+      case (HMap.lookup p obj) of
+        Just val -> getQualifiedYamlValue' ps val
+        Nothing  -> throw $ VariableNotDefinedException p
+    _ -> throw $ VariableNotDefinedException p
+
+parseVariablePath :: T.Text -> [T.Text]
+parseVariablePath variablePath = T.splitOn "." variablePath
 
 -- | Matches all allowed filenames in a unix system, minus the ) character.
 -- That is, all characters except "/" and ")".

@@ -4,3 +4,6 @@ third: |
   weird
   var
 nonexistent: aohs\naoe
+nested:
+  vars: a
+  b: c
