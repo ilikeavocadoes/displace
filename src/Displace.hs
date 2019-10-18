@@ -78,9 +78,8 @@ parseVariablePath :: T.Text -> [T.Text]
 parseVariablePath variablePath = T.splitOn "." variablePath
 
 -- | Matches all allowed filenames in a unix system, minus the ) character.
--- That is, all characters except "/" and ")".
 filenameRegex :: T.Text
-filenameRegex = "\\(\\(([^/)]+)\\)\\)"
+filenameRegex = "\\(\\(([^)]+)\\)\\)"
 
 -- | Finds the first variable name enclosed in (()) and returns the text
 -- preceding it, the variable name, and the text after it, wrapped in a Right
