@@ -2,14 +2,14 @@ name:                displace
 version:             0.1.0.0
 github:              "ilikeavocadoes/displace"
 license:             OtherLicense
-author:              "ilikeavocadoes"
-maintainer:          "ilikeavocadoes@hush.com"
-copyright:           "2019 ilikeavocadoes"
+author:              "Lassi Haasio"
+maintainer:          "Lassi Haasio"
+copyright:           "2019 Lassi Haasio"
 
 extra-source-files:
 - README.md
 
-description:         Please see the README on GitHub at <https://github.com/githubuser/displace#readme>
+description:         Please see the README on GitHub at <https://github.com/ilikeavocadoes/displace#readme>
 
 dependencies:
 - base >= 4.7 && < 5
