@@ -10,6 +10,7 @@ haskellPackages.shellFor {
     yaml
     text
     containers
+    unordered-containers
     regex-tdfa
     regex-tdfa-text
   ];

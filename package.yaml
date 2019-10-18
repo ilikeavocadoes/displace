@@ -16,6 +16,7 @@ dependencies:
 - yaml >= 0.11 && < 0.12
 - text
 - containers
+- unordered-containers
 - regex-tdfa
 - regex-tdfa-text
 

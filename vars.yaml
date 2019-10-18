@@ -1,4 +1,6 @@
 hello: world
+number: 0.0537
+boolean: true
 second: variable
 third: |
   weird

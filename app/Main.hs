@@ -6,7 +6,4 @@ import           Lib
 import           System.Environment
 
 main :: IO ()
-main = do
-  filename <- head <$> getArgs
-  variableValues <- decodeFileThrow filename
-  IO.interact $ replaceVariables variableValues
+main = IO.getContents >>= replaceVariables >>= IO.putStr
