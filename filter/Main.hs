@@ -1,8 +1,9 @@
 module Main where
 
 import qualified Data.Text        as T
-import           Lib
 import           Text.Pandoc.JSON
+
+import           Displace
 
 main :: IO ()
 main = toJSONFilter replaceVariablesInStrings
